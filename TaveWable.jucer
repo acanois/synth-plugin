@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="G00mhG" name="TaveWable" projectType="audioplug" jucerVersion="5.4.5"
+              pluginFormats="buildAU" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              companyName="Saturn Valley">
+  <MAINGROUP id="vy3Jhq" name="TaveWable">
+    <GROUP id="{957D2372-B875-B3BB-4D8E-DEB8C4247FA8}" name="Source">
+      <FILE id="eYP4L0" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
+      <FILE id="A9iVqj" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
+      <FILE id="mT8F6E" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="YeOE6S" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="MZmBEW" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="Aswt5j" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../cloned_repos/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../cloned_repos/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <LIVE_SETTINGS>
+    <OSX/>
+  </LIVE_SETTINGS>
+  <JUCEOPTIONS JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+</JUCERPROJECT>
