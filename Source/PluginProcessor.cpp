@@ -36,13 +36,6 @@ TaveWableAudioProcessor::TaveWableAudioProcessor()
 
 TaveWableAudioProcessor::~TaveWableAudioProcessor()
 {
-    DBG ("Cleaning up");
-    if (mMonoVoice != nullptr)
-    {
-        DBG ("Deleting sounds and voices");
-        delete mMonoVoice;
-        mMonoVoice = nullptr;
-    }
 }
 
 //==============================================================================

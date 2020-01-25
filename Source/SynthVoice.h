@@ -18,6 +18,7 @@ public:
     SynthVoice()
     {
         initVoice();
+        initEnv();
     }
     
     ~SynthVoice() {}
@@ -35,6 +36,24 @@ public:
 //        }, mTableSize);
     }
     
+    void initEnv()
+    {
+        mAdsrParameters.attack  = 0.001f;
+        mAdsrParameters.decay   = 0.01f;
+        mAdsrParameters.sustain = 0.5f;
+        mAdsrParameters.release = 1.f;
+        mAdsr.setParameters (mAdsrParameters);
+    }
+    
+    void setEnvParameters (float* attack, float* decay, float* sustain, float* release)
+    {
+        mAdsrParameters.attack  = *attack;
+        mAdsrParameters.decay   = *decay;
+        mAdsrParameters.sustain = *sustain;
+        mAdsrParameters.release = *release;
+        mAdsr.setParameters (mAdsrParameters);
+    }
+    
     bool canPlaySound (SynthesiserSound* synthSound) override
     {
          return dynamic_cast<SynthSound*>(synthSound) != nullptr;
@@ -45,12 +64,12 @@ public:
         mFreq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
         mVel = velocity;
         mOscillator.setFrequency (mFreq);
-//        mAdsr.noteOn();
+        mAdsr.noteOn();
     }
     
     void stopNote (float velocity, bool allowTailOff) override
     {
-//        mAdsr.noteOff();
+        mAdsr.noteOff();
         allowTailOff = true;
         if (velocity == 0) clearCurrentNote();
     }
@@ -62,12 +81,22 @@ public:
         auto block = mTempBlock.getSubBlock (0, numSamples);
         block.clear();
         
-        juce::dsp::ProcessContextReplacing<float> context (block);
-        mOscillator.process (context);
-        juce::dsp::AudioBlock<float> (outputBuffer)
-            .getSubBlock (startSample, numSamples)
-            .clear()
-            .add (mTempBlock);
+        if (mAdsr.isActive())
+        {
+            juce::dsp::ProcessContextReplacing<float> context (block);
+            mOscillator.process (context);
+            juce::dsp::AudioBlock<float> (outputBuffer)
+                .getSubBlock (startSample, numSamples)
+                .clear()
+                .add (mTempBlock);
+            
+            mAdsr.applyEnvelopeToBuffer (outputBuffer, startSample, numSamples);
+        }
+        else
+        {
+            clearCurrentNote();
+            mAdsr.reset();
+        }
     }
     
     void pitchWheelMoved (int newPitchWheelValue) override {}
