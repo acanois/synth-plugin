@@ -99,11 +99,14 @@ void TaveWableAudioProcessor::changeProgramName (int index, const String& newNam
 void TaveWableAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     ignoreUnused (samplesPerBlock);
+    
     mSpec.sampleRate = sampleRate;
     mSpec.maximumBlockSize = samplesPerBlock;
     mSpec.numChannels = getTotalNumOutputChannels();
+    
     mSynth.setCurrentPlaybackSampleRate (sampleRate);
     midiMessageCollector.reset (sampleRate);
+    
     mMonoVoice->reset();
     mMonoVoice->prepare (mSpec);
 }

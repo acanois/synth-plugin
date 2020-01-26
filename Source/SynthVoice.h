@@ -25,15 +25,14 @@ public:
     
     void initVoice()
     {
-        mOscillator.initialise ([] (float phase) { return std::sin (phase) * 0.3f; }, mTableSize);
-//        mOscillator.initialise ([] (float phase) {
-//            auto sum = 0;
-//            // Starts at 1 or it trips a jassert
-//            for (auto i = 1; i < 10; ++i)
-//                // Sinc Function
-//                sum += std::sin(((2 * i) - 1) * phase) / (((2 * i) - 1));
-//            return ((4.0 / float_Pi) * sum);
-//        }, mTableSize);
+        mOscillator.initialise ([this] (float phase) {
+            float sineSum = 0;
+            auto maxHarmonics = std::floor((2.0 * mSampleRate / (static_cast<double>(mFreq))));
+            for (auto harmonic = 1; harmonic < maxHarmonics; ++harmonic)
+                sineSum += std::sin((2 * harmonic - 1) * phase) / ((2 * harmonic - 1));
+            sineSum *= 0.3;
+            return 4.f / float_Pi * sineSum;
+        }, mTableSize);
     }
     
     void initEnv()
@@ -127,4 +126,5 @@ private:
     float mFreq { 440.f };
     float mVel  { 0.f   };
     double mSampleRate { 44100 };
+    double mMaxHarmonics { std::floor((2.0 * mSampleRate / (static_cast<double>(mFreq)))) };
 };
