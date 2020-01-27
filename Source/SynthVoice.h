@@ -12,6 +12,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "OpOscillator.h"
+#include "Envelope.h"
+
 class SynthVoice  : public SynthesiserVoice
 {
 public:
@@ -25,22 +28,15 @@ public:
     
     void initVoice()
     {
-        mOscillator.initialise ([this] (float phase) {
-            float sineSum = 0;
-            auto maxHarmonics = std::floor((2.0 * mSampleRate / (static_cast<double>(mFreq))));
-            for (auto harmonic = 1; harmonic < maxHarmonics; ++harmonic)
-                sineSum += std::sin((2 * harmonic - 1) * phase) / ((2 * harmonic - 1));
-            sineSum *= 0.3;
-            return 4.f / float_Pi * sineSum;
-        }, mTableSize);
+        mOscillator.initialise([] (float phase) { return std::sin (phase); }, mTableSize);
     }
     
     void initEnv()
     {
-        mAdsrParameters.attack  = 0.001f;
-        mAdsrParameters.decay   = 0.01f;
+        mAdsrParameters.attack  = 0.01f;
+        mAdsrParameters.decay   = 0.1f;
         mAdsrParameters.sustain = 0.5f;
-        mAdsrParameters.release = 1.f;
+        mAdsrParameters.release = 0.5f;
         mAdsr.setParameters (mAdsrParameters);
     }
     
@@ -63,6 +59,7 @@ public:
         mFreq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
         mVel = velocity;
         mOscillator.setFrequency (mFreq);
+        initVoice();
         mAdsr.noteOn();
     }
     
