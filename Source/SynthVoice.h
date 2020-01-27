@@ -20,16 +20,11 @@ class SynthVoice  : public SynthesiserVoice
 public:
     SynthVoice()
     {
-        initVoice();
+        mOpOsc->initOscillator();
         initEnv();
     }
     
     ~SynthVoice() {}
-    
-    void initVoice()
-    {
-        mOscillator.initialise([] (float phase) { return std::sin (phase); }, mTableSize);
-    }
     
     void initEnv()
     {
@@ -58,8 +53,8 @@ public:
     {
         mFreq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
         mVel = velocity;
-        mOscillator.setFrequency (mFreq);
-        initVoice();
+        mOpOsc->setFrequency (mFreq);
+        mOpOsc->initOscillator();
         mAdsr.noteOn();
     }
     
@@ -70,9 +65,9 @@ public:
         if (velocity == 0) clearCurrentNote();
     }
     
-    void renderNextBlock (AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override
+    void renderNextBlock (AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override
     {
-        mOscillator.setFrequency (mFreq);
+        mOpOsc->setFrequency (mFreq);
         
         auto block = mTempBlock.getSubBlock (0, numSamples);
         block.clear();
@@ -80,12 +75,12 @@ public:
         if (mAdsr.isActive())
         {
             juce::dsp::ProcessContextReplacing<float> context (block);
-            mOscillator.process (context);
+            mOpOsc->process (context);
             juce::dsp::AudioBlock<float> (outputBuffer)
                 .getSubBlock (startSample, numSamples)
                 .clear()
                 .add (mTempBlock);
-            
+
             mAdsr.applyEnvelopeToBuffer (outputBuffer, startSample, numSamples);
         }
         else
@@ -102,18 +97,18 @@ public:
     void prepare (juce::dsp::ProcessSpec& spec)
     {
         mTempBlock = juce::dsp::AudioBlock<float> (mHeapBlock, spec.numChannels, spec.maximumBlockSize);
-        mOscillator.prepare (spec);
+        mOpOsc->prepare (spec);
     }
     
     void reset()
     {
-        mOscillator.reset();
+        mOpOsc->reset();
     }
     
 private:
-    juce::HeapBlock<char> mHeapBlock;
+    std::unique_ptr<OpOscillator<float>> mOpOsc = std::make_unique<OpOscillator<float>>();
     
-    juce::dsp::Oscillator<float> mOscillator;
+    juce::HeapBlock<char> mHeapBlock;
     juce::dsp::AudioBlock<float> mTempBlock;
     
     ADSR mAdsr;
@@ -124,4 +119,9 @@ private:
     float mVel  { 0.f   };
     double mSampleRate { 44100 };
     double mMaxHarmonics { std::floor((2.0 * mSampleRate / (static_cast<double>(mFreq)))) };
+    
+    
+    ///=============================================================================
+    
+    
 };
