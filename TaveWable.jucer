@@ -5,6 +5,8 @@
               companyName="Saturn Valley">
   <MAINGROUP id="vy3Jhq" name="TaveWable">
     <GROUP id="{957D2372-B875-B3BB-4D8E-DEB8C4247FA8}" name="Source">
+      <FILE id="p2V9Mf" name="EnvelopeGui.h" compile="0" resource="0" file="Source/EnvelopeGui.h"/>
+      <FILE id="yk7zoc" name="EnvelopeGui.cpp" compile="1" resource="0" file="Source/EnvelopeGui.cpp"/>
       <FILE id="T9oosP" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
       <FILE id="KCuSzS" name="OpOscillator.h" compile="0" resource="0" file="Source/OpOscillator.h"/>
       <FILE id="eYP4L0" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>

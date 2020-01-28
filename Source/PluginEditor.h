@@ -13,6 +13,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 
+#include "EnvelopeGui.h"
+
 //==============================================================================
 /**
 */
@@ -35,6 +37,8 @@ private:
         mKeyboardState,
         MidiKeyboardComponent::horizontalKeyboard
     };
+    
+    std::unique_ptr<EnvelopeGui> mEnvGui = std::make_unique<EnvelopeGui>();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TaveWableAudioProcessorEditor)
 };

@@ -118,10 +118,4 @@ private:
     float mFreq { 440.f };
     float mVel  { 0.f   };
     double mSampleRate { 44100 };
-    double mMaxHarmonics { std::floor((2.0 * mSampleRate / (static_cast<double>(mFreq)))) };
-    
-    
-    ///=============================================================================
-    
-    
 };

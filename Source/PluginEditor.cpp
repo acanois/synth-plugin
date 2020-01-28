@@ -41,4 +41,6 @@ void TaveWableAudioProcessorEditor::resized()
     componentBounds.setBounds (100, 100, 100, 100);
     
     mKeyboardComponent.setBounds (area.removeFromBottom (80).reduced (8));
+    
+    mEnvGui->setBounds(0, 0, 500, 100);
 }
