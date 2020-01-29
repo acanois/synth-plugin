@@ -16,14 +16,11 @@ class EnvelopeGui : public Component,
                     Slider::Listener
 {
 public:
-    EnvelopeGui();
-    ~EnvelopeGui();
-    
     void resized() override;
     void paint (Graphics& g) override;
     void sliderValueChanged (Slider* slider) override;
-private:
     void initControls();
     
+private:
     OwnedArray<Slider> mEnvControls;
 };

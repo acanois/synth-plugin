@@ -38,7 +38,7 @@ private:
         MidiKeyboardComponent::horizontalKeyboard
     };
     
-    std::unique_ptr<EnvelopeGui> mEnvGui = std::make_unique<EnvelopeGui>();
-
+    OwnedArray<Slider> mEnvControls;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TaveWableAudioProcessorEditor)
 };
