@@ -13,18 +13,13 @@
 
 //==============================================================================
 TaveWableAudioProcessorEditor::TaveWableAudioProcessorEditor (TaveWableAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+    : AudioProcessorEditor (&p), processor (p), mEnvelopeGui (p)
 {
     addAndMakeVisible (mKeyboardComponent);
     mKeyboardComponent.setMidiChannel (2);
     mKeyboardState.addListener (&processor.getMidiMessageCollector());
     
-    for (int i = 0; i < 4; ++i)
-    {
-        auto* envControl = new Slider (Slider::RotaryVerticalDrag, Slider::TextBoxBelow);
-        mEnvControls.add (envControl);
-        addAndMakeVisible (envControl);
-    }
+    addAndMakeVisible (&mEnvelopeGui);
     
     setSize (720, 550);
 }
@@ -48,14 +43,5 @@ void TaveWableAudioProcessorEditor::resized()
     componentBounds.setBounds (100, 100, 100, 100);
     mKeyboardComponent.setBounds (area.removeFromBottom (80).reduced (8));
     
-    Rectangle<int> sliderBounds;
-    sliderBounds.setBounds (100, 100, 100, 100);
-    int xPos = sliderBounds.getX();
-    
-    for (Slider* control : mEnvControls)
-    {
-        control->setBounds (xPos, sliderBounds.getY(), sliderBounds.getWidth(), sliderBounds.getHeight());
-        xPos += (sliderBounds.getX() + 10);
-    }
-    
+    mEnvelopeGui.setBounds (area.removeFromTop (mEnvelopeGui.getComponentHeight()));
 }

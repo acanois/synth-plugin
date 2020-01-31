@@ -10,6 +10,19 @@
 
 #include "EnvelopeGui.h"
 
+EnvelopeGui::EnvelopeGui (TaveWableAudioProcessor& p)
+: processor (p)
+{
+    sliderBounds.setBounds (0, 100, 100, 100);
+    mComponentBounds.setBounds (0, 0, (sliderBounds.getWidth() * 4) + 40, (sliderBounds.getHeight()));
+    initControls();
+}
+
+EnvelopeGui::~EnvelopeGui()
+{
+    
+}
+
 void EnvelopeGui::sliderValueChanged (Slider *slider)
 {
     
@@ -27,18 +40,15 @@ void EnvelopeGui::initControls()
 
 void EnvelopeGui::resized()
 {
-    Rectangle<int> sliderBounds;
-    sliderBounds.setBounds (100, 100, 100, 100);
-    int xPos = sliderBounds.getX();
-    
+    int xPos = mComponentBounds.getX();
     for (Slider* control : mEnvControls)
     {
-        control->setBounds (xPos, sliderBounds.getY(), sliderBounds.getWidth(), sliderBounds.getHeight());
-        xPos += (sliderBounds.getX() + 10);
+        control->setBounds (xPos, mComponentBounds.getY(), sliderBounds.getWidth(), sliderBounds.getHeight());
+        xPos += (sliderBounds.getX() + sliderBounds.getWidth() + 10);
     }
 }
 
 void EnvelopeGui::paint (Graphics &g)
 {
-    g.fillAll (Colours::white);
+    g.fillAll (Colours::black);
 }

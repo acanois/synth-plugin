@@ -40,5 +40,7 @@ private:
     
     OwnedArray<Slider> mEnvControls;
     
+    EnvelopeGui mEnvelopeGui;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TaveWableAudioProcessorEditor)
 };
