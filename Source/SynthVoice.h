@@ -35,12 +35,12 @@ public:
         mAdsr.setParameters (mAdsrParameters);
     }
     
-    void setEnvParameters (float* attack, float* decay, float* sustain, float* release)
+    void setEnvParameters (float attack, float decay, float sustain, float release)
     {
-        mAdsrParameters.attack  = *attack;
-        mAdsrParameters.decay   = *decay;
-        mAdsrParameters.sustain = *sustain;
-        mAdsrParameters.release = *release;
+        mAdsrParameters.attack  = attack;
+        mAdsrParameters.decay   = decay;
+        mAdsrParameters.sustain = sustain;
+        mAdsrParameters.release = release;
         mAdsr.setParameters (mAdsrParameters);
     }
     

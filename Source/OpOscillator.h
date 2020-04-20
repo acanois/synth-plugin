@@ -21,8 +21,6 @@ public:
         initOscillator();
     }
     
-    ~OpOscillator() {}
-    
     void initOscillator()
     {
         mOscillator.initialise([] (Type phase) {

@@ -18,7 +18,8 @@
 //==============================================================================
 /**
 */
-class TaveWableAudioProcessor  : public AudioProcessor
+class TaveWableAudioProcessor  : public AudioProcessor,
+                                 public AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -60,15 +61,24 @@ public:
     
     ///=============================================================================
     MidiMessageCollector& getMidiMessageCollector() { return midiMessageCollector; }
+    juce::AudioProcessorValueTreeState& getValueTree() { return mValueTree; }
+    
+    void parameterChanged (const String& parameterID, float newValue) override;
 
 private:
     //==============================================================================
+    Atomic<float> mAttack  { 0.1f };
+    Atomic<float> mDecay   { 0.3f };
+    Atomic<float> mSustain { 0.5f };
+    Atomic<float> mRelease { 0.3f };
+    
     MidiMessageCollector midiMessageCollector;
     Synthesiser mSynth;
     SynthSound* mMonoSound;
     SynthVoice* mMonoVoice;
     
     juce::dsp::ProcessSpec mSpec;
+    AudioProcessorValueTreeState mValueTree;
     
     static constexpr int mNumVoices { 1 };
     double mCurrentSamplerate { 44100 };

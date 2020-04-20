@@ -23,12 +23,13 @@ public:
     void resized() override;
     void paint (Graphics& g) override;
     void sliderValueChanged (Slider* slider) override;
-    void initControls();
+    void initControls (TaveWableAudioProcessor& p);
     
     int getComponentHeight() { return mComponentBounds.getHeight(); }
     
 private:
     OwnedArray<Slider> mEnvControls;
+    OwnedArray<AudioProcessorValueTreeState::SliderAttachment> mEnvAttachments;
     Rectangle<int> mComponentBounds;
     Rectangle<int> sliderBounds;
     

@@ -21,17 +21,28 @@ TaveWableAudioProcessor::TaveWableAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
 #endif
+mValueTree (*this, nullptr, "ParameterState", {
+    std::make_unique<AudioParameterFloat> ("attack", "Attack", NormalisableRange<float> (0.01f, 3.0f, 0.001f), mAttack.get()),
+    std::make_unique<AudioParameterFloat> ("decay", "Decay", NormalisableRange<float> (0.01f, 3.0f, 0.001f), mDecay.get()),
+    std::make_unique<AudioParameterFloat> ("sustain", "Sustain", NormalisableRange<float> (0.0f, 1.0f, 0.001f), mSustain.get()),
+    std::make_unique<AudioParameterFloat> ("release", "Release", NormalisableRange<float> (0.01f, 5.0f, 0.001f), mRelease.get())
+})
 {
+    mValueTree.addParameterListener ("attack", this);
+    mValueTree.addParameterListener ("decay", this);
+    mValueTree.addParameterListener ("sustain", this);
+    mValueTree.addParameterListener ("release", this);
+    
     mSynth.clearVoices();
     mSynth.clearSounds();
     
     mMonoSound = new SynthSound();
     mMonoVoice = new SynthVoice();
     
-    mSynth.addSound(mMonoSound);
-    mSynth.addVoice(mMonoVoice);
+    mSynth.addSound (mMonoSound);
+    mSynth.addVoice (mMonoVoice);
 }
 
 TaveWableAudioProcessor::~TaveWableAudioProcessor()
@@ -136,6 +147,14 @@ bool TaveWableAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 }
 #endif
 
+void TaveWableAudioProcessor::parameterChanged (const String& parameterID, float newValue)
+{
+    if (parameterID == "attack")  mAttack.set  (newValue);
+    if (parameterID == "decay")   mDecay.set   (newValue);
+    if (parameterID == "sustain") mSustain.set (newValue);
+    if (parameterID == "release") mRelease.set (newValue);
+}
+
 void TaveWableAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
@@ -147,6 +166,8 @@ void TaveWableAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuff
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
+    mMonoVoice->setEnvParameters (mAttack.get(), mDecay.get(), mSustain.get(), mRelease.get());
+    
     buffer.clear();
     mSynth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 }
@@ -154,7 +175,7 @@ void TaveWableAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuff
 //==============================================================================
 bool TaveWableAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true;
 }
 
 AudioProcessorEditor* TaveWableAudioProcessor::createEditor()

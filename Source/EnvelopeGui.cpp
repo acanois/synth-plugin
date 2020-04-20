@@ -14,8 +14,8 @@ EnvelopeGui::EnvelopeGui (TaveWableAudioProcessor& p)
 : processor (p)
 {
     sliderBounds.setBounds (0, 100, 100, 100);
-    mComponentBounds.setBounds (0, 0, (sliderBounds.getWidth() * 4) + 40, (sliderBounds.getHeight()));
-    initControls();
+    mComponentBounds.setBounds (0, 0, (sliderBounds.getWidth() * 4), (sliderBounds.getHeight()));
+    initControls (p);
 }
 
 EnvelopeGui::~EnvelopeGui()
@@ -28,12 +28,16 @@ void EnvelopeGui::sliderValueChanged (Slider *slider)
     
 }
 
-void EnvelopeGui::initControls()
+void EnvelopeGui::initControls(TaveWableAudioProcessor& p)
 {
-    for (int i = 0; i < 4; ++i)
+    std::array<std::string, 4> paramNames = { "attack", "decay", "sustain", "release" };
+    
+    for (auto paramName : paramNames)
     {
         auto* envControl = new Slider (Slider::RotaryVerticalDrag, Slider::TextBoxBelow);
+        auto* envAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.getValueTree(), paramName, *envControl);
         mEnvControls.add (envControl);
+        mEnvAttachments.add (envAttachment);
         addAndMakeVisible (envControl);
     }
 }

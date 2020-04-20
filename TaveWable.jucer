@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="G00mhG" name="TaveWable" projectType="audioplug" jucerVersion="5.4.5"
+<JUCERPROJECT id="G00mhG" name="TaveWable" projectType="audioplug" jucerVersion="5.4.7"
               pluginFormats="buildAU" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               companyName="Saturn Valley">
   <MAINGROUP id="vy3Jhq" name="TaveWable">
