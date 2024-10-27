@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="G00mhG" name="TaveWable" projectType="audioplug" jucerVersion="5.4.7"
-              pluginFormats="buildAU" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
-              companyName="Saturn Valley">
+<JUCERPROJECT id="G00mhG" name="TaveWable" projectType="audioplug" pluginFormats="buildAU"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              companyName="Saturn Valley" jucerFormatVersion="1">
   <MAINGROUP id="vy3Jhq" name="TaveWable">
     <GROUP id="{957D2372-B875-B3BB-4D8E-DEB8C4247FA8}" name="Source">
       <FILE id="p2V9Mf" name="EnvelopeGui.h" compile="0" resource="0" file="Source/EnvelopeGui.h"/>

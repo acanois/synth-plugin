@@ -24,10 +24,10 @@ TaveWableAudioProcessor::TaveWableAudioProcessor()
                        ),
 #endif
 mValueTree (*this, nullptr, "ParameterState", {
-    std::make_unique<AudioParameterFloat> ("attack", "Attack", NormalisableRange<float> (0.01f, 3.0f, 0.001f), mAttack.get()),
-    std::make_unique<AudioParameterFloat> ("decay", "Decay", NormalisableRange<float> (0.01f, 3.0f, 0.001f), mDecay.get()),
-    std::make_unique<AudioParameterFloat> ("sustain", "Sustain", NormalisableRange<float> (0.0f, 1.0f, 0.001f), mSustain.get()),
-    std::make_unique<AudioParameterFloat> ("release", "Release", NormalisableRange<float> (0.01f, 5.0f, 0.001f), mRelease.get())
+    std::make_unique<AudioParameterFloat> (juce::ParameterID {"attack", 1}, "Attack", NormalisableRange<float> (0.01f, 3.0f, 0.001f), mAttack.get()),
+    std::make_unique<AudioParameterFloat> (juce::ParameterID {"decay", 1}, "Decay", NormalisableRange<float> (0.01f, 3.0f, 0.001f), mDecay.get()),
+    std::make_unique<AudioParameterFloat> (juce::ParameterID {"sustain", 1}, "Sustain", NormalisableRange<float> (0.0f, 1.0f, 0.001f), mSustain.get()),
+    std::make_unique<AudioParameterFloat> (juce::ParameterID {"release", 1}, "Release", NormalisableRange<float> (0.01f, 5.0f, 0.001f), mRelease.get())
 })
 {
     mValueTree.addParameterListener ("attack", this);
